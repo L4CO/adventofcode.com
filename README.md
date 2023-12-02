@@ -1,2 +1,2 @@
-# adventofcode.com-
+# adventofcode.com
 Advent of Code 
