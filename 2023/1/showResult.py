@@ -5,50 +5,52 @@ import re
 inputData = open("myDataInput", "r")
 
 # accepted string values representing integers
-accepted = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+accepted = ("one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
 
 # result integer
 result = 0
 
 # RegEx search pattern
-pattern = '\d|' + '|'.join(re.escape(word) for word in accepted)
+pattern = "\d|" + "|".join(re.escape(word) for word in accepted)
 
 # determine the integer representation for result calculations
 def getValue(generalValue):
-  # when int, then return int value, try to cast into int
+  # when number (int) representation, then return int value, try to cast into int
   try:
-    print(int(generalValue))
-    return str(generalValue)
+    return str(int(generalValue))
   except:
-    #do nothong
-    a = 1
+    # we tried, so its is a word
+    dummy = 0
 
-  # when strig representation, then find index in tupple 
+  # when word (strig) representation, then find index in tupple 
   try:
-    print(accepted.index(str(generalValue)) + 1)
-    return str(accepted.index(str(generalValue))) + 1
+    return str(accepted.index(generalValue) + 1)
   except:
-    #do nothond
-    b = 1
+    print("something went wrong")
 
   # all other are inacceptable
-  return '0'  
+  return "fail"  
 
 # loop trough data file
+index = 0
+
 for line in inputData:
+    index += 1
+    print(index)
     found = re.findall(pattern, line)
-    #\b(one|two)\b
+    print(line)
+    print('found : ' + str(found))
     # concatenate first found and last found digit and add to result as integer
     stringResult = getValue(found[0]) + getValue(found[-1])
     print('String result : ' + stringResult)
     result += int(stringResult)
-    #result += int(getValue(found[0]) + getValue(found[-1]))
-    print('line : ' + line)
-    print('found : ' + str(found))
     print('result : ' + str(result))
+    print('+---------------------start from here--------------------------------+')
 
 # print result
 print("final result : ", result)
+
+#print RegEx
 print(pattern)
 
 # close data file
